@@ -45,10 +45,13 @@ public class MainLayout extends AppLayout {
         AppNav nav = new AppNav();
         AppNavItem dashboard = new AppNavItem("Dashboard", DashboardView.class, LineAwesomeIcon.CHART_AREA_SOLID.create());
         dashboard.addClassName("main-layout__nav-item");
+
         AppNavItem activeClients = new AppNavItem("Active Clients", ListView.class, LineAwesomeIcon.USER.create());
         activeClients.addClassName("main-layout__nav-item");
+
         AppNavItem map = new AppNavItem("Map", MapView.class, LineAwesomeIcon.MAP.create());
         map.addClassName("main-layout__nav-item");
+
         nav.addItem(dashboard);
         nav.addItem(activeClients);
         nav.addItem(map);

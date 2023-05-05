@@ -61,15 +61,10 @@ public class ImageListView extends Main implements HasComponents, HasStyle {
         description.addClassNames(Margin.Bottom.XLARGE, Margin.Top.NONE, TextColor.SECONDARY);
         headerContainer.add(header, description);
 
-        Select<String> sortBy = new Select<>();
-        sortBy.setLabel("Sort by");
-        sortBy.setItems("Popularity", "Newest first", "Oldest first");
-        sortBy.setValue("Popularity");
-
         imageContainer = new OrderedList();
         imageContainer.addClassNames(Gap.MEDIUM, Display.GRID, ListStyleType.NONE, Margin.NONE, Padding.NONE);
 
-        container.add(headerContainer, sortBy);
+        container.add(headerContainer);
         add(container, imageContainer);
 
     }

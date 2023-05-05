@@ -1,32 +1,16 @@
 package com.lab.application.views;
 
-
 import com.lab.application.views.dashboard.DashboardView;
 import com.lab.application.views.listView.ListView;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.html.Footer;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Header;
-import com.vaadin.flow.component.html.ListItem;
-import com.vaadin.flow.component.html.Nav;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.html.UnorderedList;
-import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
-import com.vaadin.flow.theme.lumo.LumoUtility.BoxSizing;
-import com.vaadin.flow.theme.lumo.LumoUtility.Display;
-import com.vaadin.flow.theme.lumo.LumoUtility.FlexDirection;
-import com.vaadin.flow.theme.lumo.LumoUtility.FontSize;
-import com.vaadin.flow.theme.lumo.LumoUtility.FontWeight;
-import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
-import com.vaadin.flow.theme.lumo.LumoUtility.Height;
-import com.vaadin.flow.theme.lumo.LumoUtility.ListStyleType;
-import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
-import com.vaadin.flow.theme.lumo.LumoUtility.Overflow;
-import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
-import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
-import com.vaadin.flow.theme.lumo.LumoUtility.Whitespace;
-import com.vaadin.flow.theme.lumo.LumoUtility.Width;
+import com.vaadin.flow.component.orderedlayout.Scroller;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 /**
@@ -34,72 +18,56 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
  */
 public class MainLayout extends AppLayout {
 
-    /**
-     * A simple navigation item component, based on ListItem element.
-     */
-    public static class MenuItemInfo extends ListItem {
-
-        private final Class<? extends Component> view;
-
-        public MenuItemInfo(String menuTitle, Component icon, Class<? extends Component> view) {
-            this.view = view;
-            RouterLink link = new RouterLink();
-            // Use Lumo classnames for various styling
-            link.addClassNames(Display.FLEX, Gap.XSMALL, Height.MEDIUM, AlignItems.CENTER, Padding.Horizontal.SMALL,
-                    TextColor.BODY);
-            link.setRoute(view);
-
-            Span text = new Span(menuTitle);
-            // Use Lumo classnames for various styling
-            text.addClassNames(FontWeight.MEDIUM, FontSize.MEDIUM, Whitespace.NOWRAP);
-
-            if (icon != null) {
-                link.add(icon);
-            }
-            link.add(text);
-            add(link);
-        }
-
-        public Class<?> getView() {
-            return view;
-        }
-
-    }
+    private H2 viewTitle;
 
     public MainLayout() {
-        addToNavbar(createHeaderContent());
+        addDrawerContent();
+        addHeaderContent();
     }
 
-    private Component createHeaderContent() {
-        Header header = new Header();
-        header.addClassNames(BoxSizing.BORDER, Display.FLEX, FlexDirection.COLUMN, Width.FULL);
+    private void addHeaderContent() {
+        DrawerToggle toggle = new DrawerToggle();
+        toggle.getElement().setAttribute("aria-label", "Menu toggle");
 
-        Div layout = new Div();
-        layout.addClassNames(Display.FLEX, AlignItems.CENTER, Padding.Horizontal.LARGE);
+        viewTitle = new H2();
+        viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
 
-        Nav nav = new Nav();
-        nav.addClassNames(Display.FLEX, Overflow.AUTO, Padding.Horizontal.MEDIUM, Padding.Vertical.XSMALL);
-
-        // Wrap the links in a list; improves accessibility
-        UnorderedList list = new UnorderedList();
-        list.addClassNames(Display.FLEX, Gap.SMALL, ListStyleType.NONE, Margin.NONE, Padding.NONE);
-        nav.add(list);
-
-        for (MenuItemInfo menuItem : createMenuItems()) {
-            list.add(menuItem);
-
-        }
-
-        header.add(layout, nav);
-        return header;
+        addToNavbar(true, toggle, viewTitle);
     }
 
-    private MenuItemInfo[] createMenuItems() {
-        return new MenuItemInfo[]{ //
-                new MenuItemInfo("Dashboard", LineAwesomeIcon.CHART_AREA_SOLID.create(), DashboardView.class),
-                new MenuItemInfo("Clients", LineAwesomeIcon.USER.create(), ListView.class),
+    private void addDrawerContent() {
 
-        };
+        Scroller scroller = new Scroller(createNavigation());
+
+        addToDrawer(scroller, createFooter());
     }
 
+    private AppNav createNavigation() {
+        AppNav nav = new AppNav();
+        AppNavItem dashboard = new AppNavItem("Dashboard", DashboardView.class, LineAwesomeIcon.CHART_AREA_SOLID.create());
+        dashboard.addClassName("main-layout__nav-item");
+        AppNavItem activeClients = new AppNavItem("Active Clients", ListView.class, LineAwesomeIcon.USER.create());
+        activeClients.addClassName("main-layout__nav-item");
+
+
+        nav.addItem(dashboard);
+        nav.addItem(activeClients);
+
+        return nav;
+    }
+
+    private Footer createFooter() {
+        return new Footer();
+    }
+
+    @Override
+    protected void afterNavigation() {
+        super.afterNavigation();
+        viewTitle.setText(getCurrentPageTitle());
+    }
+
+    private String getCurrentPageTitle() {
+        PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
+        return title == null ? "" : title.value();
+    }
 }

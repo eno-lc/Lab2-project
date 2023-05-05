@@ -51,7 +51,9 @@ public class CreditCardFormView extends Div {
     }
 
     private Component createTitle() {
-        return new H3("Credit Card");
+        H3 creditCard = new H3("Credit Card");
+        creditCard.addClassName("cc-form-layout");
+        return creditCard;
     }
 
     private Component createFormLayout() {
@@ -76,6 +78,7 @@ public class CreditCardFormView extends Div {
         csc = new PasswordField("CSC");
 
         FormLayout formLayout = new FormLayout();
+        formLayout.addClassName("cc-form-layout");
         formLayout.add(cardNumber, cardholderName, expiration, csc);
         return formLayout;
     }
@@ -91,6 +94,7 @@ public class CreditCardFormView extends Div {
 
         buttonLayout.add(submit);
         buttonLayout.add(cancel);
+        buttonLayout.setClassName("cc-form-layout");
         return buttonLayout;
     }
 

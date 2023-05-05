@@ -1,7 +1,7 @@
 package com.lab.application.views.dashboard;
 
 
-import com.lab.application.dto.ServiceHealth;
+import com.lab.application.entity.ServiceHealth;
 import com.lab.application.enums.Status;
 import com.lab.application.views.MainLayout;
 import com.vaadin.flow.component.Component;

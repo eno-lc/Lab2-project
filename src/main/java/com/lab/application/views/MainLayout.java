@@ -2,6 +2,7 @@ package com.lab.application.views;
 
 
 import com.lab.application.views.dashboard.DashboardView;
+import com.lab.application.views.listView.ListView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.html.Div;
@@ -95,7 +96,8 @@ public class MainLayout extends AppLayout {
 
     private MenuItemInfo[] createMenuItems() {
         return new MenuItemInfo[]{ //
-                new MenuItemInfo("Dashboard", LineAwesomeIcon.CHART_AREA_SOLID.create(), DashboardView.class), //
+                new MenuItemInfo("Dashboard", LineAwesomeIcon.CHART_AREA_SOLID.create(), DashboardView.class),
+                new MenuItemInfo("Clients", LineAwesomeIcon.USER.create(), ListView.class),
 
         };
     }

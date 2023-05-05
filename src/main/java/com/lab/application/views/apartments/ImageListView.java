@@ -23,7 +23,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.MaxWidth;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
 
-@PageTitle("Image List")
+@PageTitle("Apartments")
 @Route(value = "image-list", layout = MainLayout.class)
 public class ImageListView extends Main implements HasComponents, HasStyle {
 

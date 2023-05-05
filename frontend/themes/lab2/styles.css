@@ -1,2 +1,38 @@
 @import url('./main-layout.css');
 @import url('./views/dashboard-view.css');
+
+
+@media all and (max-width: 1100px){
+    .list-view.editing .toolbar,
+    .list-view.editing .employee-grid{
+        display: none;
+    }
+}
+
+
+
+a[highlight] {
+    font-weight: 500;
+}
+
+.main-layout__nav-item{
+    font-size: 1em;
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+a {
+    height: 35px;
+    width: 227px;
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 140ms ease 0s, color 140ms ease 0s;
+    cursor: pointer;
+}
+

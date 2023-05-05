@@ -1,5 +1,6 @@
 package com.lab.application.views;
 
+import com.lab.application.views.apartments.ImageListView;
 import com.lab.application.views.dashboard.DashboardView;
 import com.lab.application.views.listView.ListView;
 import com.lab.application.views.map.MapView;
@@ -56,10 +57,14 @@ public class MainLayout extends AppLayout {
         AppNavItem profile = new AppNavItem("Profile", ProfileView.class, LineAwesomeIcon.USER.create());
         profile.addClassName("main-layout__profile");
 
+        AppNavItem apartments = new AppNavItem("Apartments", ImageListView.class, LineAwesomeIcon.HOME_SOLID.create());
+        apartments.addClassName("main-layout__nav-item");
+
         nav.addItem(profile);
         nav.addItem(dashboard);
         nav.addItem(activeClients);
         nav.addItem(map);
+        nav.addItem(apartments);
 
         return nav;
     }

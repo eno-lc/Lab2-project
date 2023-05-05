@@ -45,13 +45,16 @@ public class ProfileView extends Div {
 
 
     private Component createTitle() {
-        return new H3("Personal information");
+        H3 info = new H3("Personal information");
+        info.addClassName("cc-form-layout");
+        return info;
     }
 
     private Component createFormLayout() {
         FormLayout formLayout = new FormLayout();
         email.setErrorMessage("Please enter a valid email address");
         formLayout.add(firstName, lastName, dateOfBirth, phone, email, occupation);
+        formLayout.addClassName("cc-form-layout");
         return formLayout;
     }
 
@@ -61,6 +64,7 @@ public class ProfileView extends Div {
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buttonLayout.add(save);
         buttonLayout.add(cancel);
+        buttonLayout.addClassName("cc-form-layout");
         return buttonLayout;
     }
 

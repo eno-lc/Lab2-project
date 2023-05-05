@@ -1,4 +1,6 @@
-package com.lab.application.views.dashboard;
+package com.lab.application.dto;
+
+import com.lab.application.enums.Status;
 
 /**
  * Simple DTO class for the inbox list to demonstrate complex object data
@@ -15,9 +17,7 @@ public class ServiceHealth {
 
     private String theme;
 
-    enum Status {
-        EXCELLENT, OK, FAILING;
-    }
+
 
     public ServiceHealth() {
 

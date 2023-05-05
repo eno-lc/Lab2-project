@@ -2,6 +2,7 @@ package com.lab.application.views;
 
 import com.lab.application.views.dashboard.DashboardView;
 import com.lab.application.views.listView.ListView;
+import com.lab.application.views.map.MapView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.Footer;
@@ -46,10 +47,11 @@ public class MainLayout extends AppLayout {
         dashboard.addClassName("main-layout__nav-item");
         AppNavItem activeClients = new AppNavItem("Active Clients", ListView.class, LineAwesomeIcon.USER.create());
         activeClients.addClassName("main-layout__nav-item");
-
-
+        AppNavItem map = new AppNavItem("Map", MapView.class, LineAwesomeIcon.MAP.create());
+        map.addClassName("main-layout__nav-item");
         nav.addItem(dashboard);
         nav.addItem(activeClients);
+        nav.addItem(map);
 
         return nav;
     }

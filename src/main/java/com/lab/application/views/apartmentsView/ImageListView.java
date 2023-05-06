@@ -1,4 +1,4 @@
-package com.lab.application.views.apartments;
+package com.lab.application.views.apartmentsView;
 
 import com.lab.application.views.MainLayout;
 import com.vaadin.flow.component.HasComponents;
@@ -9,7 +9,6 @@ import com.vaadin.flow.component.html.OrderedList;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;

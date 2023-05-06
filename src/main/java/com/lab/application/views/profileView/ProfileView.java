@@ -1,4 +1,4 @@
-package com.lab.application.views.profile;
+package com.lab.application.views.profileView;
 
 import com.lab.application.views.MainLayout;
 import com.vaadin.flow.component.Component;

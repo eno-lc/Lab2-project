@@ -1,11 +1,14 @@
 package com.lab.application.views;
 
-import com.lab.application.views.apartments.ImageListView;
+import com.lab.application.views.apartmentsView.ImageListView;
+import com.lab.application.views.appNavView.AppNav;
+import com.lab.application.views.appNavView.AppNavItem;
+import com.lab.application.views.chatView.ChatView;
 import com.lab.application.views.creditCardView.CreditCardFormView;
-import com.lab.application.views.dashboard.DashboardView;
+import com.lab.application.views.dashboardView.DashboardView;
 import com.lab.application.views.listView.ListView;
-import com.lab.application.views.map.MapView;
-import com.lab.application.views.profile.ProfileView;
+import com.lab.application.views.mapView.MapView;
+import com.lab.application.views.profileView.ProfileView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.Footer;
@@ -64,12 +67,16 @@ public class MainLayout extends AppLayout {
         AppNavItem cardForm = new AppNavItem("Card Form", CreditCardFormView.class, LineAwesomeIcon.CREDIT_CARD.create());
         cardForm.addClassName("main-layout__nav-item");
 
+        AppNavItem chat = new AppNavItem("Chat", ChatView.class, LineAwesomeIcon.COMMENTS.create());
+        chat.addClassName("main-layout__nav-item");
+
         nav.addItem(profile);
         nav.addItem(dashboard);
         nav.addItem(activeClients);
         nav.addItem(map);
         nav.addItem(apartments);
         nav.addItem(cardForm);
+        nav.addItem(chat);
 
         return nav;
     }

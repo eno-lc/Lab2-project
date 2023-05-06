@@ -1,4 +1,4 @@
-package com.lab.application.views;
+package com.lab.application.views.appNavView;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;

@@ -1,4 +1,4 @@
-package com.lab.application.views.map;
+package com.lab.application.views.mapView;
 
 import com.lab.application.views.MainLayout;
 import com.vaadin.flow.component.button.Button;

@@ -1,4 +1,4 @@
-package com.lab.application.views.dashboard;
+package com.lab.application.views.dashboardView;
 
 
 import com.lab.application.entity.ServiceHealth;

@@ -1,4 +1,4 @@
-package com.lab.application.views.apartments;
+package com.lab.application.views.apartmentsView;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;

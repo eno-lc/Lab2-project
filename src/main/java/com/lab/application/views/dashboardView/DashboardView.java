@@ -3,6 +3,10 @@ package com.lab.application.views.dashboardView;
 
 import com.lab.application.entity.ServiceHealth;
 import com.lab.application.enums.Status;
+import com.lab.application.service.ApartmentService;
+import com.lab.application.service.ClientService;
+import com.lab.application.service.ResourcesService;
+import com.lab.application.service.UserService;
 import com.lab.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.board.Board;
@@ -19,7 +23,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -30,18 +33,31 @@ import com.vaadin.flow.theme.lumo.LumoUtility.FontWeight;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
+import jakarta.annotation.security.PermitAll;
 
 @PageTitle("Dashboard")
 @Route(value = "dashboard", layout = MainLayout.class)
 @RouteAlias(value = "", layout = MainLayout.class)
+@PermitAll
 public class DashboardView extends Main {
 
-    public DashboardView() {
+    private final UserService userService;
+    private final ResourcesService resourcesService;
+    private final ClientService clientService;
+    private final ApartmentService apartmentService;
+
+    public DashboardView(UserService userService, ResourcesService resourcesService, ClientService clientService, ApartmentService apartmentService) {
+
+        this.userService = userService;
+        this.resourcesService = resourcesService;
+        this.clientService = clientService;
+        this.apartmentService = apartmentService;
+
         addClassName("dashboard-view");
 
         Board board = new Board();
-        board.addRow(createHighlight("Current users", "745", 33.7), createHighlight("View events", "54.6k", -112.45),
-                createHighlight("Conversion rate", "18%", 3.9), createHighlight("Custom metric", "-123.45", 0.0));
+        board.addRow(createHighlight("Current users", String.valueOf(userService.getUsersCount()), 33.7), createHighlight("Generated resources", resourcesService.getResourcesValue() + "$", 112.45),
+                createHighlight("Clients", String.valueOf(clientService.getClientCount()), 3.9), createHighlight("Total Apartments", String.valueOf(apartmentService.getApartmentCount()), 12.2));
         board.addRow(createViewEvents());
         board.addRow(createServiceHealth(), createResponseTimes());
         add(board);
@@ -82,14 +98,8 @@ public class DashboardView extends Main {
     }
 
     private Component createViewEvents() {
-        // Header
-        Select year = new Select();
-        year.setItems("2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021");
-        year.setValue("2021");
-        year.setWidth("100px");
 
         HorizontalLayout header = createHeader("View events", "City/month");
-        header.add(year);
 
         // Chart
         Chart chart = new Chart(ChartType.AREASPLINE);
@@ -100,7 +110,7 @@ public class DashboardView extends Main {
         xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         conf.addxAxis(xAxis);
 
-        conf.getyAxis().setTitle("Values");
+        conf.getyAxis().setTitle("Apartments");
 
         PlotOptionsAreaspline plotOptions = new PlotOptionsAreaspline();
         plotOptions.setPointPlacement(PointPlacement.ON);
@@ -110,7 +120,7 @@ public class DashboardView extends Main {
         conf.addSeries(new ListSeries("Berlin", 189, 191, 291, 396, 501, 403, 609, 712, 729, 942, 1044, 1247));
         conf.addSeries(new ListSeries("London", 138, 246, 248, 348, 352, 353, 463, 573, 778, 779, 885, 887));
         conf.addSeries(new ListSeries("New York", 65, 65, 166, 171, 293, 302, 308, 317, 427, 429, 535, 636));
-        conf.addSeries(new ListSeries("Tokyo", 0, 11, 17, 123, 130, 142, 248, 349, 452, 454, 458, 462));
+        conf.addSeries(new ListSeries("Japan", 0, 11, 17, 123, 130, 142, 248, 349, 452, 454, 458, 462));
 
         // Add it all together
         VerticalLayout viewEvents = new VerticalLayout(header, chart);
@@ -123,7 +133,7 @@ public class DashboardView extends Main {
 
     private Component createServiceHealth() {
         // Header
-        HorizontalLayout header = createHeader("Service health", "Input / output");
+        HorizontalLayout header = createHeader("Apartments", "Market values");
 
         // Grid
         Grid<ServiceHealth> grid = new Grid();
@@ -139,13 +149,13 @@ public class DashboardView extends Main {
             return status;
         })).setHeader("").setFlexGrow(0).setAutoWidth(true);
         grid.addColumn(ServiceHealth::getCity).setHeader("City").setFlexGrow(1);
-        grid.addColumn(ServiceHealth::getInput).setHeader("Input").setAutoWidth(true).setTextAlign(ColumnTextAlign.END);
-        grid.addColumn(ServiceHealth::getOutput).setHeader("Output").setAutoWidth(true)
+        grid.addColumn(ServiceHealth::getInput).setHeader("On use").setAutoWidth(true).setTextAlign(ColumnTextAlign.END);
+        grid.addColumn(ServiceHealth::getOutput).setHeader("Total").setAutoWidth(true)
                 .setTextAlign(ColumnTextAlign.END);
 
-        grid.setItems(new ServiceHealth(Status.EXCELLENT, "Münster", 324, 1540),
-                new ServiceHealth(Status.OK, "Cluj-Napoca", 311, 1320),
-                new ServiceHealth(Status.FAILING, "Ciudad Victoria", 300, 1219));
+        grid.setItems(new ServiceHealth(Status.EXCELLENT, "New York", (int) apartmentService.findApartmentsByOnUseAndName(true, "New York"), (int) apartmentService.getApartmentsByName("New York")),
+                new ServiceHealth(Status.OK, "Berlin", (int) apartmentService.findApartmentsByOnUseAndName(true, "Berlin"), (int) apartmentService.getApartmentsByName("Berlin")),
+                new ServiceHealth(Status.FAILING, "Japan", (int) apartmentService.findApartmentsByOnUseAndName(true, "Japan"), (int) apartmentService.getApartmentsByName("Japan")));
 
         // Add it all together
         VerticalLayout serviceHealth = new VerticalLayout(header, grid);
@@ -157,7 +167,7 @@ public class DashboardView extends Main {
     }
 
     private Component createResponseTimes() {
-        HorizontalLayout header = createHeader("Response times", "Average across all systems");
+        HorizontalLayout header = createHeader("Allocated Apartments", "Around the globe");
 
         // Chart
         Chart chart = new Chart(ChartType.PIE);
@@ -166,12 +176,12 @@ public class DashboardView extends Main {
         chart.setThemeName("gradient");
 
         DataSeries series = new DataSeries();
-        series.add(new DataSeriesItem("System 1", 12.5));
-        series.add(new DataSeriesItem("System 2", 12.5));
-        series.add(new DataSeriesItem("System 3", 12.5));
-        series.add(new DataSeriesItem("System 4", 12.5));
-        series.add(new DataSeriesItem("System 5", 12.5));
-        series.add(new DataSeriesItem("System 6", 12.5));
+        series.add(new DataSeriesItem("New York", apartmentService.getApartmentsByName("New York")));
+        series.add(new DataSeriesItem("Berlin", apartmentService.getApartmentsByName("Berlin")));
+        series.add(new DataSeriesItem("Japan", apartmentService.getApartmentsByName("Japan")));
+        series.add(new DataSeriesItem("London", apartmentService.getApartmentsByName("London")));
+        series.add(new DataSeriesItem("Venezia", apartmentService.getApartmentsByName("Venezia")));
+        series.add(new DataSeriesItem("Chicago", apartmentService.getApartmentsByName("Chicago")));
         conf.addSeries(series);
 
         // Add it all together

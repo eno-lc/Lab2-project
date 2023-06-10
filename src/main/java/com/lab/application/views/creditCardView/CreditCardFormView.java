@@ -15,9 +15,11 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import jakarta.annotation.security.PermitAll;
 
 @PageTitle("Credit Card Form")
 @Route(value = "credit-card-form", layout = MainLayout.class)
+@PermitAll
 public class CreditCardFormView extends Div {
 
     private TextField cardNumber;

@@ -1,5 +1,6 @@
 package com.lab.application.views;
 
+import com.lab.application.security.SecurityService;
 import com.lab.application.views.apartmentsView.ImageListView;
 import com.lab.application.views.appNavView.AppNav;
 import com.lab.application.views.appNavView.AppNavItem;
@@ -9,10 +10,13 @@ import com.lab.application.views.dashboardView.DashboardView;
 import com.lab.application.views.listView.ListView;
 import com.lab.application.views.mapView.MapView;
 import com.lab.application.views.profileView.ProfileView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -24,8 +28,9 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
 public class MainLayout extends AppLayout {
 
     private H2 viewTitle;
-
-    public MainLayout() {
+    private final SecurityService securityService;
+    public MainLayout(SecurityService securityService) {
+        this.securityService = securityService;
         addDrawerContent();
         addHeaderContent();
     }
@@ -37,7 +42,15 @@ public class MainLayout extends AppLayout {
         viewTitle = new H2();
         viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
 
-        addToNavbar(true, toggle, viewTitle);
+        Button logout = new Button("Log out", event -> securityService.logout());
+        Button profile = new Button("Profile", event -> UI.getCurrent().navigate("person-form"));
+        logout.addClassName("logout-button");
+        HorizontalLayout header = new HorizontalLayout(logout, profile);
+
+        header.getElement().getStyle().set("margin-left", "auto");
+        header.addClassNames("py-0", "px-m");
+
+        addToNavbar(toggle, header);
     }
 
     private void addDrawerContent() {
@@ -70,12 +83,10 @@ public class MainLayout extends AppLayout {
         AppNavItem chat = new AppNavItem("Chat", ChatView.class, LineAwesomeIcon.COMMENTS.create());
         chat.addClassName("main-layout__nav-item");
 
-        nav.addItem(profile);
         nav.addItem(dashboard);
         nav.addItem(activeClients);
         nav.addItem(map);
         nav.addItem(apartments);
-        nav.addItem(cardForm);
         nav.addItem(chat);
 
         return nav;

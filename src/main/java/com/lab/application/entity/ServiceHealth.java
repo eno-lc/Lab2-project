@@ -2,9 +2,7 @@ package com.lab.application.entity;
 
 import com.lab.application.enums.Status;
 
-/**
- * Simple DTO class for the inbox list to demonstrate complex object data
- */
+
 public class ServiceHealth {
 
     private Status status;

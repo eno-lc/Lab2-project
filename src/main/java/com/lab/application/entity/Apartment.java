@@ -1,6 +1,5 @@
 package com.lab.application.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,19 +7,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "clients")
+@Table(name = "apartments")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Client {
+public class Apartment {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String client;
-    private double amount;
-    private String status;
-    private String date;
+    private String name;
+    private int price;
+    private String location;
+    private Long count;
+    private boolean onUse;
+
+
 
 }

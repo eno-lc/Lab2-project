@@ -30,10 +30,15 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 import com.vaadin.flow.theme.lumo.LumoUtility.Overflow;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import com.vaadin.flow.theme.lumo.LumoUtility.Width;
+import jakarta.annotation.security.PermitAll;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.util.UUID;
 
 @PageTitle("Chat")
 @Route(value = "chat", layout = MainLayout.class)
+@PermitAll
+
 public class ChatView extends HorizontalLayout {
 
     public static class ChatTab extends Tab {
@@ -98,7 +103,8 @@ public class ChatView extends HorizontalLayout {
         // identifier, and the user's real name. You can also provide the users
         // avatar by passing an url to the image as a third parameter, or by
         // configuring an `ImageProvider` to `avatarGroup`.
-        UserInfo userInfo = new UserInfo(UUID.randomUUID().toString(), "UBT Student");
+        var name = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserInfo userInfo = new UserInfo(name, name);
 
         tabs = new Tabs();
         for (ChatInfo chat : chats) {

@@ -56,8 +56,8 @@ public class DashboardView extends Main {
         addClassName("dashboard-view");
 
         Board board = new Board();
-        board.addRow(createHighlight("Current users", String.valueOf(userService.getUsersCount()), 33.7), createHighlight("Generated resources", resourcesService.getResourcesValue() + "$", 112.45),
-                createHighlight("Clients", String.valueOf(clientService.getClientCount()), 3.9), createHighlight("Total Apartments", String.valueOf(apartmentService.getApartmentCount()), 12.2));
+        board.addRow(createHighlight("Current users", String.valueOf(userService.getUsersCount()), (double) (userService.getUsersCount() / 100)), createHighlight("Generated resources", resourcesService.getResourcesValue() + "$", (double) (resourcesService.getResourcesValue() / 100)),
+                createHighlight("Clients", String.valueOf(clientService.getClientCount()), (double) (clientService.getClientCount() / 100)), createHighlight("Total Apartments", String.valueOf(apartmentService.getApartmentCount()), (double) (apartmentService.getApartmentCount() / 100)));
         board.addRow(createViewEvents());
         board.addRow(createServiceHealth(), createResponseTimes());
         add(board);
@@ -117,10 +117,10 @@ public class DashboardView extends Main {
         plotOptions.setMarker(new Marker(false));
         conf.addPlotOptions(plotOptions);
 
-        conf.addSeries(new ListSeries("Berlin", 189, 191, 291, 396, 501, 403, 609, 712, 729, 942, 1044, 1247));
-        conf.addSeries(new ListSeries("London", 138, 246, 248, 348, 352, 353, 463, 573, 778, 779, 885, 887));
-        conf.addSeries(new ListSeries("New York", 65, 65, 166, 171, 293, 302, 308, 317, 427, 429, 535, 636));
-        conf.addSeries(new ListSeries("Japan", 0, 11, 17, 123, 130, 142, 248, 349, 452, 454, 458, 462));
+        conf.addSeries(new ListSeries("Berlin", resourcesService.getResourcesValue() / 200, resourcesService.getResourcesValue() / 500, resourcesService.getResourcesValue() / 800, resourcesService.getResourcesValue() / 900, resourcesService.getResourcesValue() / 700, resourcesService.getResourcesValue() / 333));
+        conf.addSeries(new ListSeries("London", resourcesService.getResourcesValue() / 50, resourcesService.getResourcesValue() / 40, resourcesService.getResourcesValue() / 80, resourcesService.getResourcesValue() / 70, resourcesService.getResourcesValue() / 126, resourcesService.getResourcesValue() / 12));
+        conf.addSeries(new ListSeries("New York", resourcesService.getResourcesValue() / 180, resourcesService.getResourcesValue() / 220, resourcesService.getResourcesValue() / 350, resourcesService.getResourcesValue() / 1239, resourcesService.getResourcesValue() / 1500, resourcesService.getResourcesValue() / 111));
+        conf.addSeries(new ListSeries("Japan", resourcesService.getResourcesValue() / 80, resourcesService.getResourcesValue() / 70, resourcesService.getResourcesValue() / 60, resourcesService.getResourcesValue() / 40, resourcesService.getResourcesValue() / 142, resourcesService.getResourcesValue() / 100));
 
         // Add it all together
         VerticalLayout viewEvents = new VerticalLayout(header, chart);

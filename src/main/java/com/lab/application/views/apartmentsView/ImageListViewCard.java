@@ -1,5 +1,7 @@
 package com.lab.application.views.apartmentsView;
 
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.ListItem;
@@ -21,7 +23,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Width;
 
 public class ImageListViewCard extends ListItem {
 
-    public ImageListViewCard(String text, String url) {
+    public ImageListViewCard(String url, String descriptionText, String subtitleText) {
         addClassNames(Background.CONTRAST_5, Display.FLEX, FlexDirection.COLUMN, AlignItems.START, Padding.MEDIUM,
                 BorderRadius.LARGE);
 
@@ -33,27 +35,28 @@ public class ImageListViewCard extends ListItem {
         Image image = new Image();
         image.setWidth("100%");
         image.setSrc(url);
-        image.setAlt(text);
 
         div.add(image);
 
         Span header = new Span();
         header.addClassNames(FontSize.XLARGE, FontWeight.SEMIBOLD);
-        header.setText("Title");
+        header.setText(descriptionText);
 
         Span subtitle = new Span();
         subtitle.addClassNames(FontSize.SMALL, TextColor.SECONDARY);
-        subtitle.setText("Card subtitle");
+        subtitle.setText(subtitleText);
 
-        Paragraph description = new Paragraph(
-                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.");
-        description.addClassName(Margin.Vertical.MEDIUM);
 
-        Span badge = new Span();
+        Button badge = new Button();
         badge.getElement().setAttribute("theme", "badge");
-        badge.setText("Label");
+        badge.setText("Reserve");
+        badge.getElement().getStyle().set("margin-top", "20px");
+        badge.addClickListener(event -> {
+           //redirect to credit card form page
+            UI.getCurrent().navigate("credit-card-form");
+        });
 
-        add(div, header, subtitle, description, badge);
+        add(div, header, subtitle, badge);
 
     }
 }

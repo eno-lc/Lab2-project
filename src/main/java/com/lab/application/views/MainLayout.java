@@ -1,6 +1,7 @@
 package com.lab.application.views;
 
 import com.lab.application.security.SecurityService;
+import com.lab.application.views.ManaageApartmentsView.ManageApartments;
 import com.lab.application.views.apartmentsView.ImageListView;
 import com.lab.application.views.appNavView.AppNav;
 import com.lab.application.views.appNavView.AppNavItem;
@@ -11,6 +12,7 @@ import com.lab.application.views.listView.ListView;
 import com.lab.application.views.manageClientsView.ClientsView;
 import com.lab.application.views.mapView.MapView;
 import com.lab.application.views.profileView.ProfileView;
+import com.lab.application.views.usersView.ManagingUsers;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -84,8 +86,14 @@ public class MainLayout extends AppLayout {
         AppNavItem chat = new AppNavItem("Chat", ChatView.class, LineAwesomeIcon.COMMENTS.create());
         chat.addClassName("main-layout__nav-item");
 
-
         AppNavItem clientsView = new AppNavItem("Clients Managing", ClientsView.class, LineAwesomeIcon.USER.create());
+        clientsView.addClassName("main-layout__nav-item");
+
+        AppNavItem manageApartments = new AppNavItem("Apartments Managing", ManageApartments.class, LineAwesomeIcon.HOME_SOLID.create());
+        manageApartments.addClassName("main-layout__nav-item");
+
+        AppNavItem manageUsers = new AppNavItem("Users Managing", ManagingUsers.class, LineAwesomeIcon.USER.create());
+        manageUsers.addClassName("main-layout__nav-item");
 
         nav.addItem(dashboard);
         nav.addItem(activeClients);
@@ -93,6 +101,8 @@ public class MainLayout extends AppLayout {
         nav.addItem(apartments);
         nav.addItem(chat);
         nav.addItem(clientsView);
+        nav.addItem(manageApartments);
+        nav.addItem(manageUsers);
 
         return nav;
     }

@@ -1,13 +1,7 @@
 package com.lab.application;
 
-import com.lab.application.entity.Apartment;
-import com.lab.application.entity.Client;
-import com.lab.application.entity.Resources;
-import com.lab.application.entity.User;
-import com.lab.application.repository.ApartmentRepository;
-import com.lab.application.repository.ClientRepository;
-import com.lab.application.repository.ResourcesRepository;
-import com.lab.application.repository.UserRepository;
+import com.lab.application.entity.*;
+import com.lab.application.repository.*;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;
 import org.springframework.boot.CommandLineRunner;
@@ -36,7 +30,7 @@ public class Application implements AppShellConfigurator {
 
 
     @Bean
-    CommandLineRunner commandLineRunner(ApartmentRepository apartmentRepository, UserRepository users, PasswordEncoder encoder, ClientRepository clientRepository, ResourcesRepository resourcesRepository) {
+    CommandLineRunner commandLineRunner(ApartmentRepository apartmentRepository, UserRepository users, PasswordEncoder encoder, ClientRepository clientRepository, ResourcesRepository resourcesRepository, ImageCardRepository imageCardRepository) {
         return args -> {
             users.save(new User(1L, "user", encoder.encode("password"), "ROLE_MANAGER", "Enis", "Halilaj", LocalDate.of(1998, 1, 1), "test@gmail.com"));
             users.save(new User(2L, "admin", encoder.encode("password"), "ROLE_ADMIN", "Enis", "Halilaj", LocalDate.of(1998, 1, 1), "test@gmail.com"));
@@ -70,6 +64,12 @@ public class Application implements AppShellConfigurator {
             clientRepository.save(new Client(10L,  "Enis Halilaj", 1200, "Success",LocalDate.of(1998, 1, 1)));
 
             resourcesRepository.save(new Resources(1L, 12312L));
+
+            imageCardRepository.save(new ImageCard(1L, "https://a0.muscache.com/im/pictures/miso/Hosting-546923400311446203/original/4c43b516-a11b-49bb-a2ed-d4b0c8cc34a5.jpeg?im_w=1200", "Penthouse in La Juarez - 34$ a night", "Room in a rental unit hosted by Enis"));
+            imageCardRepository.save(new ImageCard(2L, "https://a0.muscache.com/im/pictures/miso/Hosting-576599054777073307/original/53e611cc-b827-4cec-850e-c1db1274de43.jpeg?im_w=1200", "Private suite in charming house close to lake/train station - 72$ a night", "Room in a home hosted by All'In Renting"));
+            imageCardRepository.save(new ImageCard(3L, "https://a0.muscache.com/im/pictures/2fd67464-8da1-419d-b8f7-dcb840a1be0a.jpg?im_w=1200", "Suite in a Charming Colonial Villa in San Angel - 55$ a night", "Room in a rental unit hosted by Werner"));
+            imageCardRepository.save(new ImageCard(4L, "https://a0.muscache.com/im/pictures/miso/Hosting-10989371/original/46c0c87f-d9bc-443c-9b64-24d9e594b54c.jpeg?im_w=1200", "Enjoy historic Valencia and close to the beach. - 44$ a night", "Room in a rental unit hosted by Sagrario"));
+
 
 
         };

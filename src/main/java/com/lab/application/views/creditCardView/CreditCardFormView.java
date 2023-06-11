@@ -2,6 +2,7 @@ package com.lab.application.views.creditCardView;
 
 import com.lab.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.customfield.CustomField;
@@ -31,12 +32,6 @@ public class CreditCardFormView extends Div {
     private Button cancel;
     private Button submit;
 
-    /**
-     * Matches Visa, MasterCard, American Express, Diners Club, Discover, and JCB
-     * cards. See https://stackoverflow.com/a/9315696
-     */
-    private String CARD_REGEX = "^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35d{3})d{11})$";
-
     public CreditCardFormView() {
         addClassName("credit-card-form-view");
 
@@ -45,10 +40,12 @@ public class CreditCardFormView extends Div {
         add(createButtonLayout());
 
         cancel.addClickListener(e -> {
-            Notification.show("Not implemented");
+            Notification.show("Reservation cancelled successfully!");
+            UI.getCurrent().navigate("image-list");
         });
         submit.addClickListener(e -> {
-            Notification.show("Not implemented");
+            Notification.show("Reservation created successfully!");
+            UI.getCurrent().navigate("image-list");
         });
     }
 
@@ -61,7 +58,6 @@ public class CreditCardFormView extends Div {
     private Component createFormLayout() {
         cardNumber = new TextField("Credit card number");
         cardNumber.setPlaceholder("1234 5678 9123 4567");
-        cardNumber.setPattern(CARD_REGEX);
         cardNumber.setAllowedCharPattern("[\\d ]");
         cardNumber.setRequired(true);
         cardNumber.setErrorMessage("Please enter a valid credit card number");

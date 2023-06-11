@@ -110,7 +110,7 @@ public class ListView extends Div {
 
     private void createDateColumn() {
         dateColumn = grid
-                .addColumn(new LocalDateRenderer<>(client -> LocalDate.parse(client.getDate()),
+                .addColumn(new LocalDateRenderer<>(client -> LocalDate.parse(client.getDate().toString()),
                         () -> DateTimeFormatter.ofPattern("M/d/yyyy")))
                 .setComparator(client -> client.getDate()).setHeader("Date").setWidth("180px").setFlexGrow(0);
     }
@@ -165,7 +165,7 @@ public class ListView extends Div {
     private boolean areDatesEqual(Client client, DatePicker dateFilter) {
         LocalDate dateFilterValue = dateFilter.getValue();
         if (dateFilterValue != null) {
-            LocalDate clientDate = LocalDate.parse(client.getDate());
+            LocalDate clientDate = LocalDate.parse(client.getDate().toString());
             return dateFilterValue.equals(clientDate);
         }
         return true;

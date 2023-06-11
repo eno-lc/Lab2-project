@@ -8,6 +8,7 @@ import com.lab.application.views.chatView.ChatView;
 import com.lab.application.views.creditCardView.CreditCardFormView;
 import com.lab.application.views.dashboardView.DashboardView;
 import com.lab.application.views.listView.ListView;
+import com.lab.application.views.manageClientsView.ClientsView;
 import com.lab.application.views.mapView.MapView;
 import com.lab.application.views.profileView.ProfileView;
 import com.vaadin.flow.component.UI;
@@ -83,11 +84,15 @@ public class MainLayout extends AppLayout {
         AppNavItem chat = new AppNavItem("Chat", ChatView.class, LineAwesomeIcon.COMMENTS.create());
         chat.addClassName("main-layout__nav-item");
 
+
+        AppNavItem clientsView = new AppNavItem("Clients Managing", ClientsView.class, LineAwesomeIcon.USER.create());
+
         nav.addItem(dashboard);
         nav.addItem(activeClients);
         nav.addItem(map);
         nav.addItem(apartments);
         nav.addItem(chat);
+        nav.addItem(clientsView);
 
         return nav;
     }

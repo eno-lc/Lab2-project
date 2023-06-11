@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "clients")
 @Getter
@@ -21,6 +24,6 @@ public class Client {
     private String client;
     private double amount;
     private String status;
-    private String date;
+    private LocalDate date;
 
 }

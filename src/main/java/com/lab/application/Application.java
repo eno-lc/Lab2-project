@@ -16,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 /**
@@ -37,7 +38,8 @@ public class Application implements AppShellConfigurator {
     @Bean
     CommandLineRunner commandLineRunner(ApartmentRepository apartmentRepository, UserRepository users, PasswordEncoder encoder, ClientRepository clientRepository, ResourcesRepository resourcesRepository) {
         return args -> {
-            users.save(new User(1L, "user", encoder.encode("password"), "ROLE_ADMIN", "Enis", "Halilaj", LocalDate.of(1998, 1, 1), "test@gmail.com"));
+            users.save(new User(1L, "user", encoder.encode("password"), "ROLE_MANAGER", "Enis", "Halilaj", LocalDate.of(1998, 1, 1), "test@gmail.com"));
+            users.save(new User(2L, "admin", encoder.encode("password"), "ROLE_ADMIN", "Enis", "Halilaj", LocalDate.of(1998, 1, 1), "test@gmail.com"));
 
             apartmentRepository.save(new Apartment(1L, "Berlin", 1200, "Germany", 12L, true));
             apartmentRepository.save(new Apartment(2L, "Berlin", 1200, "Germany", 12L, true));
@@ -56,17 +58,16 @@ public class Application implements AppShellConfigurator {
             apartmentRepository.save(new Apartment(15L, "Venezia", 1200, "Italy", 12L, true));
             apartmentRepository.save(new Apartment(16L, "Venezia", 1200, "Italy", 12L, false));
 
-            clientRepository.save(new Client(1L,  "Enis Halilaj", 1200, "Success", "2019-02-21"));
-            clientRepository.save(new Client(2L, "Leon Leka", 1200, "Success", "2019-02-21"));
-            clientRepository.save(new Client(3L, "Avdi Vrella", 1200, "Success", "2019-02-21"));
-            clientRepository.save(new Client(4L,  "Luan Leka", 1200, "Success", "2019-02-21"));
-            clientRepository.save(new Client(5L,  "Art Leka", 1200, "Success", "2019-02-21"));
-            clientRepository.save(new Client(6L,  "Jon Leka", 1200, "Success", "2019-02-21"));
-            clientRepository.save(new Client(7L,  "Meridian Danko", 1200, "Success", "2019-02-21"));
-            clientRepository.save(new Client(8L,  "Ali Halilaj", 1200, "Success", "2019-02-21"));
-            clientRepository.save(new Client(9L,  "Don Danko", 1200, "Success", "2019-02-21"));
-            clientRepository.save(new Client(10L,  "Leke Leka", 1200, "Success", "2019-02-21"));
-            clientRepository.save(new Client(11L,  "Ron Halilaj", 1200, "Success", "2019-02-21"));
+            clientRepository.save(new Client(1L,  "Enis Halilaj", 1200, "Success",LocalDate.of(1998, 1, 1)));
+            clientRepository.save(new Client(2L,  "Enis Halilaj", 1200, "Success",LocalDate.of(1998, 1, 1)));
+            clientRepository.save(new Client(3L,  "Enis Halilaj", 1200, "Success",LocalDate.of(1998, 1, 1)));
+            clientRepository.save(new Client(4L,  "Enis Halilaj", 1200, "Success",LocalDate.of(1998, 1, 1)));
+            clientRepository.save(new Client(5L,  "Enis Halilaj", 1200, "Success",LocalDate.of(1998, 1, 1)));
+            clientRepository.save(new Client(6L,  "Enis Halilaj", 1200, "Success",LocalDate.of(1998, 1, 1)));
+            clientRepository.save(new Client(7L,  "Enis Halilaj", 1200, "Success",LocalDate.of(1998, 1, 1)));
+            clientRepository.save(new Client(8L,  "Enis Halilaj", 1200, "Success",LocalDate.of(1998, 1, 1)));
+            clientRepository.save(new Client(9L,  "Enis Halilaj", 1200, "Success",LocalDate.of(1998, 1, 1)));
+            clientRepository.save(new Client(10L,  "Enis Halilaj", 1200, "Success",LocalDate.of(1998, 1, 1)));
 
             resourcesRepository.save(new Resources(1L, 12312L));
 

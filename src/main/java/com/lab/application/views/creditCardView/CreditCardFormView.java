@@ -1,5 +1,6 @@
 package com.lab.application.views.creditCardView;
 
+import com.lab.application.request.EmailRequest;
 import com.lab.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -12,11 +13,13 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.select.Select;
+import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
+import org.springframework.web.client.RestTemplate;
 
 @PageTitle("Credit Card Form")
 @Route(value = "credit-card-form", layout = MainLayout.class)
@@ -25,14 +28,17 @@ public class CreditCardFormView extends Div {
 
     private TextField cardNumber;
     private TextField cardholderName;
+    private EmailField emailField;
     private Select<Integer> month;
     private Select<Integer> year;
     private ExpirationDateField expiration;
     private PasswordField csc;
     private Button cancel;
     private Button submit;
+    private final RestTemplate restTemplate;
 
-    public CreditCardFormView() {
+    public CreditCardFormView(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
         addClassName("credit-card-form-view");
 
         add(createTitle());
@@ -44,7 +50,10 @@ public class CreditCardFormView extends Div {
             UI.getCurrent().navigate("image-list");
         });
         submit.addClickListener(e -> {
-            Notification.show("Reservation created successfully!");
+            EmailRequest request = new EmailRequest();
+            request.setTo(emailField.getValue());
+            restTemplate.postForObject("http://localhost:8585/api/v1/email-client", request, Void.class);
+            Notification.show("Reservation created successfully! Check email at: " + emailField.getValue());
             UI.getCurrent().navigate("image-list");
         });
     }
@@ -75,9 +84,11 @@ public class CreditCardFormView extends Div {
         expiration = new ExpirationDateField("Expiration date", month, year);
         csc = new PasswordField("CSC");
 
+        emailField = new EmailField("Email");
+
         FormLayout formLayout = new FormLayout();
         formLayout.addClassName("cc-form-layout");
-        formLayout.add(cardNumber, cardholderName, expiration, csc);
+        formLayout.add(emailField, cardNumber, cardholderName, expiration, csc);
         return formLayout;
     }
 
